@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, minimal-ui">
+	<title>Draw</title>
+	<link rel="stylesheet" href="main.css">
+</head>
+<body>
+	<nav class="menu">
+		<div id="clear" class="button icon-remove"></div>
+		<div id="save" class="button icon-disk"></div>
+		<div id="color-menu-button"></div>
+		<ul id="swatches"></ul>
+		<div id="brush-type" class="button icon-pen"></div>
+		<label for="rangeSlider" class="button brush-size" id="line-width"></label>
+		<input type="range" min="1" max="20" value="2" step="1" onchange="updateLineWidth(value)" class="vertical" orient="vertical" id="rangeSlider">
+	</nav>
+	<canvas id="canvas">Sorry, but your browser is way too old!!</canvas>
+	<script src="js/script.js"></script>
+	<script src="js/vendor/fastclick.js"></script>
+	<script>
+	window.addEventListener('load', function() {
+		FastClick.attach(document.body);
+	}, false);
+</script>
+</body>
+</html>

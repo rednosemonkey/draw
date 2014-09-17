@@ -1,0 +1,5 @@
+.DS_Store
+icomoon/*
+versions/*
+.sass-cache/*
+node_modules/*

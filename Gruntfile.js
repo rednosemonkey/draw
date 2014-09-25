@@ -5,17 +5,6 @@ module.exports = function(grunt) {
 
 // CONFIG
 
-		// sass: {
-		// 	build: {
-		// 		options: {
-		// 			style: 'expanded'
-		// 		},
-		// 		files: {
-		// 			'dev/draw.css': 'sass/draw.scss'
-		// 		}
-		// 	}
-		// },
-
 //compass required for trigonometry functions used in swatch menu
 		compass: {
 			dev: {

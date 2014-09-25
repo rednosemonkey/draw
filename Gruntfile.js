@@ -1,54 +1,53 @@
 module.exports = function(grunt) {
 
-// Project configuration.
 	grunt.initConfig({
 		pkg: grunt.file.readJSON('package.json'),
-		
-		// CONFIG
+
+// CONFIG
 
 		// sass: {
-		// 	dist: {
+		// 	build: {
 		// 		options: {
 		// 			style: 'expanded'
 		// 		},
 		// 		files: {
-		// 			'main.css': 'main.scss'
+		// 			'dev/draw.css': 'sass/draw.scss'
 		// 		}
 		// 	}
 		// },
 
+//compass required for trigonometry functions used in swatch menu
 		compass: {
-			dist: {
+			dev: {
 				options: {
-					// config: 'html/user_data/packages/default/sass/config.rb',
-					sassDir: '.',
-					cssDir: '.',
-					environment: 'production',
+					sassDir: 'sass/',
+					cssDir: 'css/',
+					environment: 'development',
 					outputStyle: 'expanded'
 				}
 			} 
 		},
 
-	 autoprefixer: {
+		autoprefixer: {
 			options: {
-				browsers: ['last 2 version']
+				browsers: ['last 2 versions']
 			},
 			build: {
-				src: 'main.css'
+				src: 'css/draw.css'
 			},
 		},
 
-		// cssmin: {
-		// 	build: {
-		// 		files: {
-		// 			'build/dist/style.css': ['build/dev/*.css']
-		// 		}
-		// 	}
-		// },
+		cssmin: {
+			build: {
+				files: {
+					'prod/draw.css': ['css/draw.css']
+				}
+			}
+		},
 
 		watch: {
 			stylesheets: {
-				files: 'main.scss',
+				files: 'sass/**/*.scss',
 				tasks: [ 'default' ]
 			}
 		}
@@ -57,17 +56,16 @@ module.exports = function(grunt) {
 
 // DEPENDENT PLUGINS
 
-	// grunt.loadNpmTasks('grunt-contrib-sass');
 	grunt.loadNpmTasks('grunt-contrib-compass');
 	grunt.loadNpmTasks('grunt-contrib-watch');
-	// grunt.loadNpmTasks('grunt-contrib-cssmin');
+	grunt.loadNpmTasks('grunt-contrib-cssmin');
 	grunt.loadNpmTasks('grunt-autoprefixer');
 
 // TASKS
 
 	grunt.registerTask(
 		'default', 
-		[ 'compass', 'autoprefixer', 'watch' ] // 'cssmin', 
+		[ 'compass', 'autoprefixer', 'cssmin', 'watch' ]
 	);
 
 };

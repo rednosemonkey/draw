@@ -22,21 +22,11 @@
 }
 
 /* line 28, ../sass/_fonts.scss */
-.icon-pencil:before {
-  content: "\e600";
-}
-
-/* line 32, ../sass/_fonts.scss */
-.icon-pen:before {
-  content: "\e601";
-}
-
-/* line 36, ../sass/_fonts.scss */
 .icon-disk:before {
   content: "\e602";
 }
 
-/* line 40, ../sass/_fonts.scss */
+/* line 32, ../sass/_fonts.scss */
 .icon-remove:before {
   content: "\e603";
 }
@@ -114,12 +104,6 @@ canvas {
 }
 
 /* line 36, ../sass/_menu.scss */
-[id="brush-type"].button {
-  top: 8px;
-  right: 64px;
-}
-
-/* line 41, ../sass/_menu.scss */
 .button {
   position: absolute;
   display: block;
@@ -132,7 +116,7 @@ canvas {
   color: #ecf0f1;
   text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.8);
 }
-/* line 50, ../sass/_menu.scss */
+/* line 45, ../sass/_menu.scss */
 .button.highlight {
   color: #666;
 }

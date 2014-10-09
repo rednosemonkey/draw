@@ -1,12 +1,19 @@
+	var canvasSupport = document.getElementById('canvas-support'),
+			canvas = document.createElement('canvas'),
+			context = canvas.getContext('2d');
 
-	var canvas = document.getElementById('canvas'),
-			context = canvas.getContext('2d'),
-			lineWidth = 2,
-			draw = false,
-			cords = [];
-
+	canvas.setAttribute('id', 'canvas');
+	canvasSupport.appendChild(canvas);
 	canvas.width = window.innerWidth;
 	canvas.height = window.innerHeight;
+	
+	var	lineWidth = 2,
+			radius = 2,
+			draw = false;
+
+	context.lineWidth = radius*2;
+
+/* check for touch inputs. If not default to mouse inputs*/
 
 	var ifTouch = ('ontouchstart' in window),
 			startEvent = ifTouch ? 'touchstart' : 'mousedown',
@@ -20,71 +27,44 @@
 	function drawStart(e){
 		e.preventDefault(); 
 		draw = true;
+		drawing(e);
 	}
 
 	function drawing(e){
 		if (draw) {
 			var x = ifTouch ? (e.targetTouches[0].pageX - canvas.offsetLeft) : (e.offsetX || e.layerX - canvas.offsetLeft),
 	  			y = ifTouch ? (e.targetTouches[0].pageY - canvas.offsetTop) : (e.offsetY || e.layerY - canvas.offsetTop);
-			cords.push({
-				x: x,
-				y: y
-			});
 
-			drawOnCanvas(cords);
+			canvas.style.cursor = "crosshair";
+			context.lineTo(x, y);
+			context.stroke();
+			context.beginPath();
+			context.arc(x, y, radius, 0, Math.PI*2); 
+			context.fill();
+			context.beginPath();
+			context.moveTo(x, y);
 		}
 	}
 
 	function endDraw(){
 		draw = false;
 		canvas.style.cursor = "default";
-		cords = [];
-	}
-
-	function drawOnCanvas(cords) {
-		canvas.style.cursor = "crosshair";
 		context.beginPath();
-		context.moveTo(cords[0].x, cords[0].y);
-
-		for (var i=1; i<cords.length; i++) {
-			context.lineTo(cords[i].x, cords[i].y);
-		}
-		context.lineJoin = context.lineCap = 'round';
-		context.lineWidth = lineWidth;
-		context.stroke();
 	}
 
-// Change brush type	
+/* change line width */
 
-	var	brushTypeBtn = document.getElementById('brush-type'),
+	var lineWithOutput = document.getElementById('line-width'),
 			brushSizeBtn = document.getElementById('rangeSlider');
 
-	brushTypeBtn.addEventListener('click', changeBrushType, false);
 	brushSizeBtn.addEventListener('click', toggleRangeSlider, false);
 
-	context.shadowBlur = Math.round(lineWidth / 3);
-
-	function changeBrushType(){
-		if (brushTypeBtn.classList.contains('icon-pencil')) {
-			brushTypeBtn.classList.remove('icon-pencil');
-			brushTypeBtn.classList.add('icon-pen');
-			context.shadowBlur = Math.round(lineWidth / 3);
-		} else if (brushTypeBtn.classList.contains('icon-pen')) {
-			brushTypeBtn.classList.remove('icon-pen');
-			brushTypeBtn.classList.add('icon-pencil');
-			context.shadowBlur = 0;
-		}
-	}	
-
-// change line width
-
-	var lineWithOutput = document.getElementById('line-width');
-
-	lineWithOutput.innerHTML = lineWidth;
+	lineWithOutput.innerHTML = radius;
 
 	function updateLineWidth(newSize) {
 	 lineWithOutput.innerHTML = newSize;
-	 lineWidth = newSize;
+	 radius = newSize;
+	 context.lineWidth = radius*2;
 	 if (brushTypeBtn.classList.contains('icon-pen')) {
 		 context.shadowBlur = Math.round(newSize / 3);
 		}
@@ -94,7 +74,7 @@
 		brushSizeBtn.classList.toggle('show-slider');
 	}
 
-	// color button menu and change line color
+/* color button menu and change line color */
 	
 	var menuButton = document.getElementById('color-menu-button'),
 			drop = document.getElementsByClassName('drop-down')[0],
@@ -118,10 +98,10 @@
 	var swatches = document.getElementById('swatches');
 	var colors = ["#2c3e50", "#3498db", "#2ecc71", "#e74c3c", "#9b59b6", "#f1c40f", "#000", "pink"];
 
-	for(var i = 0, j = colors.length; i<j; i++){  // store array length as variable for efficiency. Bit anal I know...
+	for(var i = 0, j = colors.length; i<j; i++){
 		var swatch = document.createElement('li');
 		swatch.style.backgroundColor = colors[i];
-		swatches.appendChild(swatch); // inject swatches into HTML. If add color, increase the $node variable in sass and recompile. 
+		swatches.appendChild(swatch);
 	}
 
 	swatches.addEventListener('click', setSwatch, false);
@@ -129,7 +109,6 @@
 	function setSwatch(e){
 		var target = e.target,
 				selected = swatches.querySelector("li.selected");
-				// selected = document.getElementsByClassName('selected')[0];
 
 		if(selected){
 			selected.classList.remove('selected');
@@ -140,10 +119,6 @@
 			if (menuButton.classList.contains('drop-down')) {
 				menuButton.classList.remove('drop-down');
 				menuButton.classList.add('rise-up');
-				// 	swatches.addEventListener('transitionend', function(){
-				// 		console.log("finished");
-				// 		menuButtonBg.classList.remove('open-whole');
-				// }, false);
 			}
 			
 			menuButtonBg.classList.remove('open-whole');
@@ -153,12 +128,12 @@
 	}
 
 	function setColor(color){
-		context.strokeStyle = context.shadowColor = color;
+		context.strokeStyle = context.shadowColor = context.fillStyle = color;
 	}
 
 setSwatch( { target: swatches.querySelector('li') } );
 
-// clear canvas
+/* clear canvas */
 
 	var clearButton = document.getElementById('clear');
 
@@ -168,7 +143,7 @@ setSwatch( { target: swatches.querySelector('li') } );
 		context.clearRect(0, 0, canvas.width, canvas.height);
 	}
 
-// save image
+/* save image */
 
 	var saveButton = document.getElementById('save');
 

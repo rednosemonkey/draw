@@ -1,15 +1,7 @@
 # Draw #
 
-Draw is a simple mobile drawing app, but has support for both touch and mouse. I have written a second multiplayer version for using websockets running on a node server, which I will combine with this single player version in the future.
+Draw is primarily a mobile drawing app, but has support for both touch and mouse. The simple interface is to make it easy to use for small kids.
 
-## Features ##
+Checkout the [live demo site](http://rednosemonkey.com/draw)
 
-- Can change color, line thickness, and pen type.
-- Simple interface for young kids to use.
-- No external dependencies
-
-## Future changes ##
-
-- fix canvas resize on screen orientation
-- remove the need for fastclick.js by adding touch events to buttons for iOS devices.
-- combine with websockets multiplayer version.
+I have written a [multiplayer version](https://github.com/rednosemonkey/Multi-person-drawing-app) of this app. It uses websockets and runs on a node server. It is not yet complete, but can still be tried out at [drawwithfriend.com](http://www.drawwithfriend.com/).

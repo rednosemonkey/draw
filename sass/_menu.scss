@@ -11,6 +11,11 @@
 		border-radius: 50%;
 		background: url("../img/handmadepaper.min.png");
 		transition: border-radius 550ms;
+
+		@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) { 
+			background: url("../img/handmadepaper@2x.min.png");
+			background-size: 50%;
+		}
 	}
 
 	&.open-whole:before {

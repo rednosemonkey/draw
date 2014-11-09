@@ -1,3 +1,5 @@
+window.onload = function(){
+
 	var canvasSupport = document.getElementById('canvas-support'),
 			canvas = document.createElement('canvas'),
 			context = canvas.getContext('2d');
@@ -33,7 +35,7 @@
 	function drawing(e){
 		if (draw) {
 			var x = ifTouch ? (e.targetTouches[0].pageX - canvas.offsetLeft) : (e.offsetX || e.layerX - canvas.offsetLeft),
-	  			y = ifTouch ? (e.targetTouches[0].pageY - canvas.offsetTop) : (e.offsetY || e.layerY - canvas.offsetTop);
+					y = ifTouch ? (e.targetTouches[0].pageY - canvas.offsetTop) : (e.offsetY || e.layerY - canvas.offsetTop);
 
 			canvas.style.cursor = "crosshair";
 			context.lineTo(x, y);
@@ -58,15 +60,17 @@
 			brushSizeBtn = document.getElementById('rangeSlider');
 
 	brushSizeBtn.addEventListener('click', toggleRangeSlider, false);
+	brushSizeBtn.addEventListener('change', updateLineWidth, false);
 
 	lineWithOutput.innerHTML = radius;
 
 	function updateLineWidth(newSize) {
-	 lineWithOutput.innerHTML = newSize;
-	 radius = newSize;
-	 context.lineWidth = radius*2;
-	 if (brushTypeBtn.classList.contains('icon-pen')) {
-		 context.shadowBlur = Math.round(newSize / 3);
+		newSize = brushSizeBtn.value;
+		lineWithOutput.innerHTML = newSize;
+		radius = newSize;
+		context.lineWidth = radius*2;
+		if (brushTypeBtn.classList.contains('icon-pen')) {
+			context.shadowBlur = Math.round(newSize / 3);
 		}
 	}
 
@@ -154,3 +158,5 @@ setSwatch( { target: swatches.querySelector('li') } );
 		
 		window.open(data, '_blank', 'location=0, menubar=0');
 	} 
+
+}
